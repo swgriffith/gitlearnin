@@ -53,16 +53,16 @@ Branches allow you to work on various changes locally at the same time without t
 
 You create a new branch as follows:
 ```
-git branch hotfix1
-git checkout hotfix1
+git branch griffithmods
+git checkout griffithmods
 # or
 
-git checkout -b hotfix1
+git checkout -b griffithmods
 ```
 
 You can delete a branch as follows:
 ```
-git branch -d hotfix1
+git branch -d griffithmods
 ```
 
 ## Making changes
@@ -72,7 +72,7 @@ This file is now in your folder, but has not been added to the repository. You c
 
 ```
 git commit -m "commit1" .
-On branch hotfix1
+On branch griffithmods
 Untracked files:
 	griffith.txt
 
