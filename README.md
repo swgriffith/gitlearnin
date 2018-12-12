@@ -102,4 +102,21 @@ You can push to any remote repository you have listed when you run the following
 git remote -v
 ```
 
-In this case we want to push our branch with it's changes up to github
+In this case we want to push our branch with it's changes up to github, so we'll run the following and when prompted enter our github credentials. 
+
+**Note 1:** We'll come back to the credentials discussion, but use login and password for now.
+**Note 2:** If you're not a collaborator on a remote repository, you cannot push to it. You will get an error.
+
+```
+#git push <remotename> <branchname>
+git push github griffithmods
+```
+
+Now go take a look at your remote repository (i.e. GitHub or Azure DevOps) and see if your new branch is available in the branches list.
+
+## Credentials
+Entering your UserID and password may be a bit tedious on every remote repository push. Fortunately there are a few options to solve this pain.
+
+1. Use an SSH Key pair for authentication and SSH cloning instead of HTTPS cloning
+2. Use credential manager
+
