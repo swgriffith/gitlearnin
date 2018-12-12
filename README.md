@@ -95,3 +95,11 @@ git commit -m "Added new file griffith.txt"
 # or 
 git commit
 ```
+
+## Pushing to your remote repository (i.e. GitHub or Azure DevOps)
+You can push to any remote repository you have listed when you run the following:
+```
+git remote -v
+```
+
+In this case we want to push our branch with it's changes up to github
