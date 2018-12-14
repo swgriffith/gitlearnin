@@ -296,7 +296,7 @@ Date:   Thu Dec 13 20:34:38 2018 -0500
 
 Now lets back out the merge and use a rebase instead. Take a look at the commit log for each option and pay special attention to the commit id and timestamps. You can see that rebase blew away the history and re-executed every commit, where the merge actually shows all of the original commits as the occured.
 
-**Note:** git reset allows you to rewind your commits back. Think rewinding a tape, and your last commit is where the tape head it sitting before the rewind. When I saw HEAD~1 that means go back one commit from where the HEAD currently sits. --hard means that I dont care if commits are discarded. You can use soft if you might want to recover commits after moving back in the commit tree.
+**Note:** git reset allows you to rewind your commits back. Think rewinding a tape, and your last commit is where the tape head is sitting before the rewind. When I saw HEAD~1 that means go back one commit from where the HEAD currently sits. --hard means that I dont care if commits are discarded. You can use soft if you might want to recover commits after moving back in the commit tree.
 
 ```
 git reset --hard HEAD~1
