@@ -202,3 +202,123 @@ git checkout feature    #Checks out the feature branch
 git rebase master       #Rebases your feature branch from master
 ```
 
+### Demo
+```
+mkdir test
+cd test
+git init
+echo "commit1" > newfile.txt
+git add newfile.txt
+git commit -m "added file" .
+
+git log
+commit a086cff2c5f347edd6deccf133f222a68c332509 (HEAD -> master)
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:34:38 2018 -0500
+
+    added file
+```
+
+Now create a new branch, change a file and merge from master.
+
+```
+git checkout -b feature
+echo "commit2">>newfile.txt
+git commit -m "commit2" .
+
+git log
+commit 16e09e47aebba5b04c73b59e50d2f1bf7ec89d63 (HEAD -> feature)
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:39:14 2018 -0500
+
+    commit2
+
+commit a086cff2c5f347edd6deccf133f222a68c332509 (master)
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:34:38 2018 -0500
+
+    added file
+
+```
+
+```
+git checkout master
+echo "commit 3" > newfile2.txt
+git add newfile2.txt
+git commit -m "added another file" .
+
+git log
+commit b3a6cf1b3c25c398bfea4bda4cefd8e93b048c29 (HEAD -> master)
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:48:14 2018 -0500
+
+    added another file
+
+commit a086cff2c5f347edd6deccf133f222a68c332509
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:34:38 2018 -0500
+
+    added file
+```
+
+
+```
+git checkout feature
+git merge feature master
+
+git log
+commit 1e28400cb8a1bbd25947c59980b2698317280f7e (HEAD -> feature)
+Merge: 16e09e4 b3a6cf1
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:49:39 2018 -0500
+
+    Merge branch 'master' into feature
+
+commit b3a6cf1b3c25c398bfea4bda4cefd8e93b048c29 (master)
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:48:14 2018 -0500
+
+    added another file
+
+commit 16e09e47aebba5b04c73b59e50d2f1bf7ec89d63
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:39:14 2018 -0500
+
+    commit2
+
+commit a086cff2c5f347edd6deccf133f222a68c332509
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:34:38 2018 -0500
+
+    added file
+
+```
+
+Now lets back out the merge and use a rebase instead. Take a look at the commit log for each option and pay special attention to the commit id and timestamps. You can see that rebase blew away the history and re-executed every commit, where the merge actually shows all of the original commits as the occured.
+
+**Note:** git reset allows you to rewind your commits back. Think rewinding a tape, and your last commit is where the tape head it sitting before the rewind. When I saw HEAD~1 that means go back one commit from where the HEAD currently sits. --hard means that I dont care if commits are discarded. You can use soft if you might want to recover commits after moving back in the commit tree.
+
+```
+git reset --hard HEAD~1
+git rebase master
+
+git log
+commit ac0707a52ef4886b211c9bec14a7dc117d4fb36b (HEAD -> feature)
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:39:14 2018 -0500
+
+    commit2
+
+commit b3a6cf1b3c25c398bfea4bda4cefd8e93b048c29 (master)
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:48:14 2018 -0500
+
+    added another file
+
+commit a086cff2c5f347edd6deccf133f222a68c332509
+Author: Steve Griffith <stgriffi@microsoft.com>
+Date:   Thu Dec 13 20:34:38 2018 -0500
+
+    added file
+
+```
