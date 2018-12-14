@@ -122,6 +122,13 @@ Entering your UserID and password may be a bit tedious on every remote repositor
 
 
 ### Using Credential Manager
+To use credential manager you can simpley enable credential cache from global config. This will limit the frequency with which you have to enter your user id and password.
+
+```
+git config --global credential.helper cache
+```
+
+NEED TO ADD MORE HERE ABOUT WINDOWS CREDENTIAL MANAGER
 
 ### Using an SSG Key Pair
 By generating an SSH key pair by using a tool like ssh-keygen, you can share your public key with your remote (i.e. GitHub or Azure DevOps). This key pair can be generated with or without a passphrase, although with is recommended. If you pull via the SSH endpoint rather than via the HTTPS endpoint, when you push git will attempt to use your ssh key to authenticate with the remote. If you've added your public key then you'll be able to push without entering a user ID and Password.
@@ -174,3 +181,24 @@ Got do your remote repository, and add the ssh key for your user.
 In either case you'll want to come up with a name for your key that represents where you're using it from (ex. Azure Cloud Shell, Windows PC, etc)
 
 Once saved, you can now use the SSH endpoint for git clone and ssh for pushing to git remotes without user ID and password.
+
+## Merging and Rebasing
+There are a lot of cases where you'll need to get changes from one branch incorporated into another. There are two main mechanisms for this and each have separate uses, pros and cons.
+
+### Merge
+When you have two branches (ex. feature and master) a merge will allow you to take the changes from one branch and add them to the other as a new commit. This is nice because it's non-destructive. All of your commits to this point are maintained and you're just getting a new commit that merges from one branch to another. On the other hand, if you're merging from a very active branch you'll need ot merge pretty frequently and may not like having all of those commits cluttering up your history.
+
+The following will merge the differences from the master branch into the feature branch as a new commit.
+```
+git merge feature master
+```
+
+### Rebase
+When you rebase a branch you effectively move your branch forward replaying all of the commits from the one branch onto another. So, for example, if you created a feature branch from master yesterday morning and did some work, and then ran a rebase, git would rewind your feature branch to the begining and replay all of you're commits on the latest version of master. This is a nice clean way to move forward, but you're effectively destroying and re-writing your history.
+
+To do this you checkout the branch you want to update and run rebase as follows:
+```
+git checkout feature    #Checks out the feature branch
+git rebase master       #Rebases your feature branch from master
+```
+
