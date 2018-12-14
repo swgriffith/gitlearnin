@@ -117,7 +117,60 @@ Now go take a look at your remote repository (i.e. GitHub or Azure DevOps) and s
 ## Credentials
 Entering your UserID and password may be a bit tedious on every remote repository push. Fortunately there are a few options to solve this pain.
 
-1. Use an SSH Key pair for authentication and SSH cloning instead of HTTPS cloning
-2. Use credential manager
+1. Use credential manager
+2. Use an SSH Key pair for authentication and SSH cloning instead of HTTPS cloning
 
 
+### Using Credential Manager
+
+### Using an SSG Key Pair
+By generating an SSH key pair by using a tool like ssh-keygen, you can share your public key with your remote (i.e. GitHub or Azure DevOps). This key pair can be generated with or without a passphrase, although with is recommended. If you pull via the SSH endpoint rather than via the HTTPS endpoint, when you push git will attempt to use your ssh key to authenticate with the remote. If you've added your public key then you'll be able to push without entering a user ID and Password.
+
+Using ssh-keygen from Linux, Mac or Windows Subsystem for Linux should look like the following. Again, entering a passphrase is recommended.
+
+```
+ssh-keygen
+Generating public/private rsa key pair.
+Enter file in which to save the key (/home/steve/.ssh/id_rsa):
+Enter passphrase (empty for no passphrase): 
+Enter same passphrase again: 
+Your identification has been saved in /home/steve/.ssh/id_rsa3.
+Your public key has been saved in /home/steve/.ssh/id_rsa3.pub.
+The key fingerprint is:
+SHA256:ubvUzxiRQd9Sj076+ZUv23GD5Af0bvagTah4mf5dsZ0 steve@griffith
+The key's randomart image is:
++---[RSA 2048]----+
+|          .   .  |
+|         . . o o |
+|          . o.+ .|
+|         . o.=.  |
+|        S o .o.o |
+|         o .oo+.*|
+|        o oo.o=E=|
+|       . o+* ===B|
+|        +++.= +o=|
++----[SHA256]-----+
+```
+
+The above process will create a new folder under /home/<username>/.ssh which contains the following files:
+
+* **id_rsa** - File containing your private key
+* **id_rsa.pub** - File containing your public key
+* **known_hosts** - File tracking connections you've made to various hosts and which ssh-key was used
+
+
+Grab the full contents of the id_rsa.pub files either opening the file or using cat on linux.
+
+```
+cat ~/.ssh/id_rsa.pub
+ssh-rsa AAAA<BUNCH OF TEXT I REMOVED>EYM2Xj steve@griffith
+```
+
+Got do your remote repository, and add the ssh key for your user.
+
+1. GitHub - You can find this by clicking on your user profile and going to 'Settings -> SSH and PGP Keys'
+2. Azure DevOps - You can find this by clicking on your user profile and going to 'Security -> SSH Public Keys'
+
+In either case you'll want to come up with a name for your key that represents where you're using it from (ex. Azure Cloud Shell, Windows PC, etc)
+
+Once saved, you can now use the SSH endpoint for git clone and ssh for pushing to git remotes without user ID and password.
